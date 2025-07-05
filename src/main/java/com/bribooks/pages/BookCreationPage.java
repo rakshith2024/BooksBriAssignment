@@ -14,7 +14,6 @@ public class BookCreationPage {
         PageFactory.initElements(driver, this);
     }
 
-    // Elements (Update based on actual site structure if needed)
     @FindBy(xpath = "//button[contains(text(),'Create New Book')]")
     private WebElement createNewBookButton;
 

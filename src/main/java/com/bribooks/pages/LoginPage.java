@@ -31,12 +31,37 @@ public class LoginPage {
     @FindBy(xpath = "//button[text()='Login']")
     private WebElement loginButton;
 
-    @FindBy(xpath = "//div[contains(text(), 'invalid')]") // Adjust this based on actual error text
+    @FindBy(xpath = "//div[contains(text(), 'invalid')]")
     private WebElement invalidError;
 
     @FindBy(xpath = "//button[contains(text(), 'Accept All Cookies')]")  // 🔁
     private WebElement acceptCookiesButton;
 
+    @FindBy(xpath = "//a[contains(@class, 'login-button')]")
+    private WebElement loginMenuButton;
+
+    @FindBy(xpath = "//button[contains(text(), 'Email')]")
+    private WebElement emailLoginButton;
+
+    public void clickEmailLoginButton() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(emailLoginButton)).click();
+    }
+
+    public void waitForLoginForm() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
+    }
+
+    public void clickLoginMenuButton() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement loginBtn = wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.xpath("//a[contains(@class, 'login-button')]")
+        ));
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", loginBtn);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", loginBtn);
+    }
 
 
     // Actions
@@ -67,7 +92,7 @@ public class LoginPage {
 
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", acceptBtn);
         } catch (Exception ignored) {
-            System.out.println("Cookie popup not found or already dismissed.");
+            System.out.println("Cookie popup not found");
         }
     }
 
